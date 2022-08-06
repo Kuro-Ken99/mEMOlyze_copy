@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>edit</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="bread_crumb">
+      <th:block th:if="${memo.memoType == 'memo'}">
+        <a th:href="@{/top}">top</a> > edit
+      </th:block>
+      <th:block th:if="${memo.memoType == 'draft'}">
+        <a th:href="@{/top}">top</a> > <a th:href="@{/create}">create</a> > edit
+      </th:block>
+    </div>
+    <div class="edit_form" th:object="${memo}">
+      <form th:action="@{/update}" method="POST">
+        <input type="hidden" name="memo_id" th:value="*{id}">
+        <input type="text" name="title" th:value="*{title}">
+        <textarea name="memo" th:text="*{memo}" required></textarea>
+        <p th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></p>
+        <div class="edit_btns">
+          <button type="submit" name="memo_type" value="memo">保存</button>
+          <button type="submit" name="memo_type" value="draft">下書き保存</button>
+          <button type="button" class="stop_button">編集をやめる</button>
+          <script>
+            $('.stop_button').click(function () {
+              if(!confirm("編集中の内容が消えてしまいますが、よろしいですか？")) {
+                return false;
+              } else {
+                location.href = '[(@{/drop(memo_type=*{memoType})})]';
+              }
+            });
+          </script>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+
+

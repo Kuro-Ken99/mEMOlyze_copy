@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>contact</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="bread_crumb">
+      <a th:href="@{/top}">top</a> > contact
+    </div>
+    <div class="contact">
+      <h2>お問合せ</h2>
+      <div class="contact_form">
+        <p>下記フォームに内容を入力の上、送信ボタンを押してください。</p>
+        <form th:action="@{/contact}" method="POST">
+          <textarea name="content" placeholder="お問合せ内容をご記載ください"></textarea>
+          <button type="submit">送信</button>
+        </form>
+        <p>ご返信には少々お時間をいただきます。</p>
+      </div>
+    </div>
+    <div class="faq">
+      <h2>よくある質問</h2>
+      <div class="faq_contents">
+        <div>
+          <p class="question click_here">Q. mEMOlyzeとは何ですか？</p>
+          <p class="hidden">A. ご自身の書き溜めたメモをもとに、<br>単語の使用頻度や文章の感情スコアを解析する、ちょっと変わったメモアプリです。</p>
+        </div>
+        <div>
+          <p class="question click_here">Q. なんでmEMOlyzeという名前なの？</p>
+          <p class="hidden">A. 'memo', 'emotion', 'analyze'<br>この3つの単語を組み合わせ、1単語で表しています。</p>
+        </div>
+        <div>
+          <p class="question click_here">Q. よく使うはずの単語が分析結果に入っていないのはなぜ？</p>
+          <p class="hidden">A. 分析にはkuromojiというjavaでできた形態素解析エンジンを使っています。<br>そこに内包されているMeCab-IPADICという辞書に含まれる単語が抽出される仕組みになっています。<br>辞書に含まれない単語(例えば最近流行り出した新しい言葉や、単語と単語をご自身がオリジナルに組み合わせたものなど)の場合、<br>抽出結果から漏れてしまう可能性がございます。</p>
+        </div>
+        <div>
+          <p class="question click_here">Q. 形態素解析とは？</p>
+          <p class="hidden">A. 文章を細かく切り分け、それぞれの品詞などを判別する解析手法です。<br>このアプリでは特定の品詞の単語のみを抽出し、その出現頻度などを表示できるようになっています。</p>
+        </div>
+        <div>
+          <p class="question click_here">Q. 頻出単語の中に、感情スコアを持つものと持たないものがあります。<br>これはなぜですか？</p>
+          <p class="hidden">このアプリでは、東北大学 乾・岡崎研究室著作の「日本語評価局制辞書」を使用しています。<br>この辞書に含まれる単語のみに感情スコアが割り当てられるのですが、<br>今回は名詞のみが含まれた「名詞編」を使っており、該当する単語が少なめになっています。</p>
+        </div>
+        <div>
+          <p class="question click_here">Q. 名前やパスワードを変える方法はありますか？</p>
+          <p class="hidden">ページ右上の丸いアイコンをクリックすると、登録情報確認・編集のページが開きます。<br>変更したい行の右にある「変更」をクリックすることで、変更用のフォームを表示できます。<br>なお、名前は30文字まで・パスワードは8文字以上という制限がございますので、ご了承ください。</p>
+        </div>
+        <div>
+          <p class="question click_here">Q. 退会する方法はありますか？</p>
+          <p class="hidden">下記より退会手続きが可能です。<br>差し支えなければ、退会のご理由もご記載いただけますと幸いです。</p>
+          <form th:action="@{/account_delete}" method="POST">
+            <textarea name="opinion" placeholder="退会のご理由やサービスへのご指摘、ご評価いただいた点など、ご自由にご記載ください(任意)"></textarea>
+            <p class="warning">※1度退会すると、これまでのメモを含むアカウントデータが全て消去されます。<br>ご了承ください。</p>
+            <button type="submit" class="delete_button">アカウントを削除</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

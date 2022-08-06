@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>mypage</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="bread_crumb">
+      <a th:href="@{/top}">top</a> > mypage
+    </div>
+    <div th:object="${loginUser}" class="info">
+      <h2>登録情報</h2>
+      <div class="info_box">
+        <div>
+          <p>name:　<span th:text="*{name}"></span></p>
+          <p class="change click_here">変更</p>
+        </div>
+        <form 
+          id="info_form" 
+          th:class="${nameError} ? 'info_form' : 'hidden info_form'"  
+          th:action="@{/name_update}" 
+          method="POST">
+          <input type="text" name="name" maxlength="30" required>
+          <button type="submit">send</button>
+        </form>
+      </div>
+      <div class="info_box">
+        <div>
+          <p>mail:　<span th:text="*{username}"></span></p>
+          <p class="change click_here">変更</p>
+        </div>
+        <form 
+          id="info_form" 
+          th:class="${mailError} ? 'info_form' : 'hidden info_form'" 
+          th:action="@{/mail_update}" 
+          method="POST">
+          <input type="email" name="mail" required>
+          <button type="submit">send</button>
+        </form>
+      </div>
+      <div class="info_box">
+        <div>
+          <p>password:　<span>(非表示)</span></p>
+          <p class="change click_here">変更</p>
+        </div>
+        <form 
+          id="info_form" 
+          th:class="${passError} ? 'info_form' : 'hidden info_form'"
+          th:action="@{/pass_update}" 
+          method="POST">
+          <input type="password" name="current_password" minlength="8" placeholder="現在のパスワード" required>
+          <input type="password" name="new_pass" minlength="8" placeholder="新しいパスワード" required>
+          <input type="password" name="renew_pass" minlength="8" placeholder="新しいパスワード(再入力)" required>
+          <button type="submit">send</button>
+        </form>
+      </div>
+      <div th:if="${doneAnnounce}">
+        <p th:text="${doneAnnounce}"></p>
+      </div>
+      <div th:if="${mailUpdated}">
+        <p>メールアドレスの変更が完了しました</p>
+      </div>
+      <div class="error_message">
+        <div th:if="${errorMessage}">
+          <p th:text="${errorMessage}"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,906 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: 'engine';
+  src: url('../files/LEngineer-Regular.otf') format('opentype');
+}
+
+/* 全体 */
+
+
+body {
+  margin: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 8px;
+}
+
+h1,
+h2 {
+  font-weight: normal;
+  text-align: center;
+  padding-bottom: 4px;
+  margin-bottom: 32px;
+  background-image: linear-gradient(to right, #351f39 8px, transparent 8px);
+  background-size: 12px 2px;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  user-select: none;
+}
+
+button {
+  user-select: none;
+  border: none;
+  outline: 1px solid rgba(160, 193, 184, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+a:hover, 
+button:hover {
+  opacity: 0.6;
+  transition: opacity .3s;
+}
+
+p {
+  margin: 0;
+}
+
+input,
+textarea {
+  background-color: rgba(160, 193, 184, 0.2);
+  color: #351f39;
+  border: 1px solid rgba(53, 31, 57, 0.4);
+  border-radius: 4px;
+}
+
+input:focus,
+textarea:focus {
+  outline: 1px solid rgba(53, 31, 57, 0.8);
+}
+
+.click_here {
+  cursor: pointer;
+  user-select: none;
+}
+
+.click_here:hover {
+  opacity: 0.6;
+  transition: opacity .3s;
+}
+
+.error_message {
+  color: #CC0000;
+}
+
+/* ヘッダー */
+header {
+  width: 100%;
+  background-color: #709fb0;
+  color: white;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.logo {
+  font-family: 'engine';
+  font-size: 48px;
+}
+
+.header_list {
+  display: flex;
+  align-items: center;
+}
+
+.site_nav {
+  font-size: 16px;
+}
+
+.logo,
+.site_nav {
+  color: white;
+}
+
+.contact_and_faq {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.user_icon {
+  margin-left: 16px;
+  text-align: center;
+  background-color: #726a95;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user_icon a {
+  font-size: 16px;
+  color: white;
+  display: block;
+}
+
+/* メイン */
+.bread_crumb {
+  padding: 16px 0;
+  font-size: 12px;
+}
+
+main {
+  width: 100%;
+  background-color: #F4e8c1;
+  color: #351f39;
+  min-height: 100vh;
+  padding-bottom: 32px;
+}
+
+main a {
+  color: #351f39;
+}
+
+/* フッター */
+footer {
+  background-color: #351f39;
+  height: 48px;
+}
+
+footer .container {
+  text-align: center;
+}
+
+footer p {
+  display: block;
+  color: white;
+  line-height: 48px;
+}
+
+/* home画面 */
+.slogan {
+  margin-bottom: 120px;
+}
+
+.slogan h1 {
+  margin-top: 0;
+  margin-bottom: 120px;
+  padding-top: 160px;
+  background-image: none;
+  font-family: 'Hiragino Maru Gothic ProN W4';
+  letter-spacing: 4px;
+}
+
+.slogan h1 span {
+  font-family: 'engine';
+  font-size: 60px;
+}
+
+.slogan_border {
+  display: flex;
+  user-select: none;
+}
+
+.slogan_border_1,
+.slogan_border_4,
+.slogan_border_7,
+.slogan_border_10 {
+  transform: rotate(-10deg);
+  font-weight: bold;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.slogan_border_2,
+.slogan_border_6,
+.slogan_border_8,
+.slogan_border_11 {
+  transform: rotate(15deg);
+  font-size: 20px;
+  margin-right: 8px;
+}
+
+.slogan_border_3,
+.slogan_border_5,
+.slogan_border_9 {
+  margin-right: 8px;
+}
+
+
+.description_block h2 {
+  background-image: none;
+  font-family: 'Hiragino Maru Gothic ProN W4';
+}
+
+.description_block h2 span {
+  font-family: 'engine';
+  font-size: 40px;
+}
+
+.description_block img {
+  width: 400px;
+  height: 400px;
+}
+
+.description_block > div {
+  display: flex;
+}
+
+.app_description {
+  width: 60%;
+}
+
+.app_description > div {
+  margin-bottom: 24px;
+}
+
+.app_description p {
+  margin-bottom: 8px;
+}
+
+.description_title {
+  font-weight: bold;
+  margin-top: 24px;
+  font-size: 20px;
+}
+
+.app_description div span {
+  background: linear-gradient(transparent 60%, #709fb0 90%);
+}
+
+.reference {
+  font-size: 12px;
+}
+
+.entry_buttons {
+  width: 50%;
+  margin: 80px auto;
+}
+
+.entry_buttons button {
+  width: 100%;
+  margin-bottom: 24px;
+  height: 32px;
+}
+
+.modal {
+  z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(53, 31, 57, 0.75);
+  display: none;
+}
+
+.modal_content {
+  width: 60%;
+  height: 10%;
+	border: 1px solid #F4e8c1;
+  background-color: white;
+	z-index: 2;
+  position: fixed;
+  top: 40%;
+  left: 20%;
+  text-align: center;
+}
+
+.modal_content p {
+  font-size: 12px;
+}
+
+/* ログイン画面、再設定画面 */
+.login,
+.register,
+.reissue {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.login h2,
+.register h2,
+.reissue h2 {
+  margin-top: 0;
+  padding-top: 80px;
+}
+
+.login form input,
+.register form input,
+.reissue form input {
+  display: block;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 16px;
+  height: 24px;
+}
+
+.login form button,
+.register form button,
+.reissue form button {
+  display: block;
+  width: 50%;
+  margin: 0 auto 24px;
+  height: 28px;
+}
+
+.pass_reissue {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.pass_reissue > p {
+  text-align: right;
+  font-size: 12px;
+}
+
+.pass_reissue > div p {
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.pass_reissue div form input,
+.pass_reissue div form button {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.after_register {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.validation_error {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.validation_error input {
+  display: block;
+  width: 80%;
+  margin: 24px auto 24px;
+  height: 24px;
+}
+
+.validation_error button {
+  display: block;
+  width: 20%;
+  margin: 0 10% 0 auto;
+  height: 16px;
+}
+
+/* メモ一覧 */
+.memos_and_links {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+}
+
+.memos {
+  width: 60%;
+}
+
+.memo {
+  background-color: #a0c1b8;
+  margin-bottom: 32px;
+  border-radius: 16px;
+}
+
+.text_box {
+  padding: 16px;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.memo_text {
+  font-size: 16px;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis:hover {
+  white-space: pre-wrap;
+}
+
+.text_box p {
+  margin-bottom: 8px;
+}
+
+.created_at {
+  font-size: 12px;
+  text-align: right;
+}
+
+.text_box button {
+  margin-top: 8px;
+}
+
+.text_box form {
+  display: inline-block;
+}
+
+/* links */
+.links {
+  width: 30%;
+  margin-top: 12px;
+}
+
+.links > div {
+  margin-bottom: 56px;
+}
+
+/* 分析結果チラ見せ */
+.analytics_digest > div {
+  margin-bottom: 16px;
+}
+
+.emotion_part {
+  display: flex;
+  justify-content: space-between;
+}
+
+.indent {
+  text-indent: 32px;
+}
+
+.highlight {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.posi {
+  color: #FF8C00;
+}
+
+.nega {
+  color: #CC0000;
+}
+
+.neut {
+  color: #709fb0;
+}
+
+.analytics_description {
+  margin-top: 48px;
+}
+
+.analytics_description p {
+  margin-bottom: 8px;
+}
+
+/* リンク */
+.link a {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.archive a {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* メモ作成画面、編集画面 */
+.create_form,
+.edit_form {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.create_form input,
+.edit_form input {
+  display: inline-block;
+  height: 24px;
+  width: 100%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.create_form textarea,
+.edit_form textarea {
+  display: inline-block;
+  height: 480px;
+  width: 100%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.edit_btns {
+  display: flex;
+  justify-content: end;
+}
+
+.edit_btns button {
+  margin-left: 4px;
+}
+
+.drafts {
+  width: 60%;
+  margin: 0 auto;
+}
+
+/* メモ編集画面 */
+.edit_form {
+  width: 50%;
+  margin: 0 auto;
+}
+
+/* 検索フォーム */
+.search {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.search_form {
+  width: 100%;
+}
+
+.search_form > input {
+  display: inline-block;
+  height: 24px;
+  width: 100%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+}
+
+.date_search {
+  margin: 0 auto;
+  display: flex;
+}
+
+.date {
+  width: 50%;
+  text-align: center;
+}
+
+.date label {
+  font-size: 12px;
+}
+
+.date input {
+  display: inline-block;
+  width: 70%;
+  height: 24px;
+  margin-bottom: 16px;
+  margin-left: 3%;
+}
+
+.radio_btns {
+  display: flex;
+  margin: 0 auto;
+  justify-content: space-between;
+  padding-bottom: 40px;
+}
+
+.radio_btns input {
+  accent-color: #351f39;
+}
+
+.not_filtered {
+  display: block;
+  width: 50%;
+  margin: 32px auto 0;
+}
+
+/* 検索結果 */
+.searched_memos {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.color_sample {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  margin: 0 auto 52px;
+  align-items: center;
+}
+
+.color_square {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  vertical-align: 4px;
+  border-radius: 8px;
+}
+
+.memo_color {
+  background-color: #a0c1b8;
+}
+
+.draft_color {
+  background-color: #726a95;
+}
+
+.draft {
+  background-color: #726a95;
+  border-radius: 16px;
+  color: #f5f5f5;
+}
+
+.no_result {
+  display: block;
+  margin-top: 32px;
+  margin-left: 9%;
+}
+
+/* メモ分析 */
+.analytics_btn {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 16px;
+}
+
+.analytics_attention {
+  font-size: 12px;
+}
+
+/* .edit_form button {
+  margin-left: 4px;
+} */
+
+/* 分析画面 */
+.analytics {
+  width: 90%;
+  margin: 32px auto 32px;
+}
+
+.posi_color {
+  background-color: #FF8C00;
+}
+
+.nega_color {
+  background-color: #CC0000;
+}
+
+.neut_color {
+  background-color: #709fb0;
+}
+
+.null_color {
+  background-color: #351f39;
+}
+
+.analytics_result {
+  display: flex;
+}
+
+.frequent_word {
+  width: 50%;
+}
+
+.frequent_title {
+  width: 90%;
+  margin-left: auto;
+  margin-bottom: 12px;
+  font-size: 20px;
+}
+
+.word_and_frequency {
+  margin-bottom: 8px;
+  display: flex;
+}
+
+.senti_key {
+  width: 50%;
+  margin-left: auto;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.senti_value {
+  width: 40%;
+  font-size: 16px;
+}
+
+.senti_value span {
+  font-weight: bold;
+}
+
+.ranking_1 {
+  font-size: 32px;
+}
+
+.ranking_2 {
+  font-size: 28px;
+}
+
+.ranking_3 {
+  font-size: 24px;
+}
+
+.ranking_4 {
+  font-size: 20px;
+}
+
+.ranking_5 {
+  font-size: 16px;
+}
+
+.open, .close {
+  width: 90%;
+  margin: 16px 0 16px auto;
+}
+
+.senti_analytics {
+  width: 50%;
+}
+
+.senti_analytics p {
+  width: 80%;
+  margin-left: auto;
+  margin-bottom: 12px;
+}
+
+.senti_title {
+  font-size: 20px;
+}
+
+.senti_score {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* .analytics_error {
+  width: 80%;
+  margin: 0 auto;
+} */
+
+.error_title {
+  margin-bottom: 16px;
+}
+
+/* マイページ */
+.info {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.info h2 {
+  margin-bottom: 48px;
+}
+
+.info > div {
+  width: 80%;
+  margin: 0 auto 16px;
+}
+
+.info_box {
+  background-image: linear-gradient(to right, #351f39 8px, transparent 8px);
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+}
+
+.info_box > div {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+
+.info_form {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+
+.change {
+  margin-right: 2%;
+  font-size: 14px;
+}
+
+.info_box input {
+  display: block;
+  width: 25%;
+  height: 16px;
+  margin-bottom: 16px;
+  margin-left: 1%;
+}
+
+.info_box button {
+  display: block;
+  height: 16px;
+}
+
+/* お問合せ */
+.contact {
+  width: 80%;
+  margin: 0 auto 72px;
+}
+
+.contact_form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.contact_form textarea {
+  width: 100%;
+  height: 400px;
+  background-color: rgba(160, 193, 184, 0.2);
+  color: #351f39;
+  border: 1px solid rgba(53, 31, 57, 0.4);
+  border-radius: 4px;
+  margin: 16px 0;
+  box-sizing: border-box;
+}
+
+.contact_form button {
+  margin-left: auto;
+  border: none;
+  outline: 1px solid rgba(160, 193, 184, 0.3);
+  border-radius: 4px;
+  display: block;
+  cursor: pointer;
+  margin-bottom: 12px;
+}
+
+/* よくある質問 */
+.faq h2 {
+margin-bottom: 40px;
+}
+
+.faq_contents > div {
+  width: 90%;
+  margin: 0 auto 16px;
+  border-bottom: 1px dashed #000;
+}
+
+.faq_contents > div > p {
+  margin-bottom: 8px;
+}
+
+.faq_contents form {
+  display: none;
+}
+
+.faq_contents form textarea {
+  display: block;
+  width: 80%;
+  margin: 16px auto;
+  height: 400px;
+  background-color: rgba(160, 193, 184, 0.2);
+  color: #351f39;
+  border: 1px solid rgba(53, 31, 57, 0.4);
+  border-radius: 4px;
+}
+
+.faq_contents form p {
+  font-size: 12px;
+}
+
+.faq_contents form button {
+  display: block;
+  margin-left: auto;
+  margin-bottom: 16px;
+  border: none;
+  outline: 1px solid rgba(160, 193, 184, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* 全体 */
+.hidden {
+  display: none;
+}

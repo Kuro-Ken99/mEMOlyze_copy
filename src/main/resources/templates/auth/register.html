@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}">
+<head>
+  <title>register</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="register">
+      <h2>新規登録</h2>
+      <form th:action="@{/register}" method="POST">
+        <input type="text" name="name" maxlength="30" placeholder="name" required>
+        <input type="email" name="mail" placeholder="mail" required>
+        <input type="password" name="password" minlength="8" placeholder="password" required>
+        <button type="submit">登録</button>
+      </form>
+    </div>
+    
+    <div class="after_register">
+      <th:block th:if="${errorList}" th:each="message : ${errorList}">
+        <p class="error_message" th:text="${message}"></p>
+      </th:block>
+      <p class="error_message" th:if="${error}" th:text="${error}"></p>
+      <p th:if="${mailSentAnnounce}" th:text="${mailSentAnnounce}"></p>
+    </div>
+  </div>
+</body>
+</html>

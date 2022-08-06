@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>archive</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="bread_crumb">
+      <a th:href="@{/top}">top</a> > archive
+    </div>
+    
+    <div class="memos_and_links">
+      <!-- アーカイブの一覧表示 -->
+      <div class="memos">
+        <h1 th:text="${month.substring(0, 4)} + 年 + ${month.substring(5, 7)} + 月"></h1>
+        <div class="memo" th:each="memo : ${archiveList}" th:object="${memo}">
+          <div class="text_box">
+            <p th:text="*{title}" class="title"></p>
+            <p class="memo_text ellipsis" th:text="*{memo}"></p>
+            <p class="created_at" th:text="|作成日時： ${#temporals.format(memo.createdAt, 'yyyy年MM月dd日　HH時mm分ss秒')}|"></p>
+            <button th:onclick="'location.href=\'' + @{/edit(id=*{id})} + '\''">edit</button>
+            <form th:action="@{/delete}" method="POST">
+              <input type="hidden" name="id" th:value="*{id}">
+              <input type="hidden" name="memo_type" th:value="*{memoType}">
+              <button type="submit" class="delete_button">delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="links">
+        <div>
+          <h2>月別アーカイブ</h2>
+          <div class="month_list" th:each="month : ${monthList}">
+            <a th:href="@{/archive(month=${month})}" th:text="${month.substring(0, 4)} + 年 + ${month.substring(5, 7)} + 月"></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
+
+

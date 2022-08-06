@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>create</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="bread_crumb">
+      <a th:href="@{/top}">top</a> > create
+    </div>
+
+    <!-- メモ作成フォーム -->
+    <div class="create_form">
+      <h2>メモを作成する</h2>
+      <form th:action="@{/create}" method="POST">
+        <input type="text" name="title" id="title" placeholder="タイトルを入力してください">
+        <textarea name="memo" id="memo" placeholder="本文を入力してください" required></textarea>
+        <p th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></p>
+        <div class="edit_btns">
+          <button type="submit" name="memo_type" value="memo">保存</button>
+          <button type="submit" name="memo_type" value="draft">下書き保存</button>
+          <button id="reset" class="delete_button" type="reset">クリア</button>
+        </div>
+        <script>
+          memo.value = localStorage.getItem('memo');
+          memo.oninput = () => {
+            localStorage.setItem('memo', memo.value)
+          };
+          title.value = localStorage.getItem('title');
+          title.oninput = () => {
+            localStorage.setItem('title', title.value)
+          };
+          $('#reset').click(function () {
+            localStorage.clear();
+          });
+        </script>
+      </form>
+    </div>
+
+    
+    <div class="drafts">
+      <h2>下書き一覧</h2>
+      <div class="memo" th:each="draft : ${draftsList}" th:object="${draft}">
+        <div class="text_box">
+          <p th:text="*{title}" class="title"></p>
+          <p class="memo_text ellipsis" th:text="*{memo}"></p>
+          <p class="created_at" th:text="|作成日時： ${#temporals.format(draft.createdAt, 'yyyy/MM/dd　HH:mm:ss')}|"></p>
+          <button th:onclick="'location.href=\'' + @{/edit(id=*{id})} + '\''">edit</button>
+          <form th:action="@{/delete}" method="POST">
+            <input type="hidden" name="id" th:value="*{id}">
+            <input type="hidden" name="memo_type" th:value="*{memoType}">
+            <button type="submit" class="delete_button">delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+

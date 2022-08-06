@@ -1,0 +1,20 @@
+server:
+  servlet:
+    context-path: /
+
+spring:
+  # mail:
+  #   host: smtp.gmail.com
+  #   port: 587
+  #   username: *****************
+  #   password: *************
+  #   properties:
+  #     mail:
+  #       smtp:
+  #         auth: true
+  #         starttls:
+  #           enable: true
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true

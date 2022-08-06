@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout/layout}">
+
+<head>
+  <title>search</title>
+</head>
+
+<body>
+  <div layout:fragment="content">
+    <div class="bread_crumb">
+      <a th:href="@{/top}">top</a> > search
+    </div>
+
+    <!-- 検索ボックス -->
+    <div class="search">
+      <h2>検索</h2>
+      <form class="search_form" th:action="@{/search}" method="POST">
+        <input class="word_search" type="text" name="free_word" th:value="${free_word} ? ${free_word} : ''"
+          placeholder="検索ワードを入力してください">
+        <div class="date_search">
+          <div class="date">
+            <label>from
+              <input type="date" name="from_date" th:value="${from_date} ? ${from_date} : ''">
+            </label>
+          </div>
+          <div class="date">
+            <label>to
+              <input type="date" name="to_date" th:value="${to_date} ? ${to_date} : ''">
+            </label>
+          </div>
+        </div>
+        <div class="radio_btns">
+          <div th:unless="${memo_type}">
+            <input type="radio" name="memo_type" value="memo" checked>メモのみ
+            <input type="radio" name="memo_type" value="draft">下書きのみ
+            <input type="radio" name="memo_type" value="both">メモ・下書き両方
+          </div>
+
+          <!-- ラジオボタンの入力値保持用 -->
+          <div th:if="${memo_type}">
+            <input type="radio" name="memo_type" value="memo" th:checked="${memo_type.equals('memo')}">メモのみ
+            <input type="radio" name="memo_type" value="draft" th:checked="${memo_type.equals('draft')}">下書きのみ
+            <input type="radio" name="memo_type" value="both" th:checked="${memo_type.equals('both')}">メモ・下書き両方
+          </div>
+          <button type="submit">search</button>
+        </div>
+      </form>
+    </div>
+
+    <p class="not_filtered error_message" th:if="${errorMessage}" th:text="${errorMessage}"></p>
+
+    <!-- 検索結果表示 -->
+    <div class="searched_memos" th:if="${searchedList}">
+      <th:block th:if="${searchedList.size() != 0}">
+        <div class="color_sample">
+          <p><span class="memo_color color_square">　</span> : メモ</p>
+          <p><span class="draft_color color_square">　</span> : 下書き</p>
+        </div>
+        <div class="memo" th:each="memo : ${searchedList}" th:object="${memo}">
+          <div th:class="|*{memoType.equals('memo') ? '' : 'draft'} text_box|">
+            <p th:text="*{title}" class="title"></p>
+            <p class="memo_text ellipsis" th:text="*{memo}"></p>
+            <p class="created_at" th:text="|作成日時： ${#temporals.format(memo.createdAt, 'yyyy/MM/dd　HH:mm:ss')}|"></p>
+            <button th:onclick="'location.href=\'' + @{/edit(id=*{id})} + '\''">edit</button>
+            <form th:action="@{/delete}" method="POST">
+              <input type="hidden" name="id" th:value="*{id}">
+              <input type="hidden" name="memo_type" th:value="*{memoType}">
+              <button type="submit" class="delete_button">delete</button>
+            </form>
+          </div>
+        </div>
+      </th:block>
+      <p th:if="${searchedList.size() == 0}" class="no_result">検索結果がありませんでした。<br>条件を変更して再度検索してください。</p>
+    </div>
+  </div>
+</body>
+
+</html>

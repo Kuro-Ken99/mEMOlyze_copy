@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>top</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="memos_and_links">
+      <!-- メモの一覧表示 -->
+      <div class="memos">
+        <h1>メモ一覧</h1>
+        <div class="memo" th:each="memo : ${memosList}" th:object="${memo}">
+          <div class="text_box">
+            <p th:text="*{title}" class="title"></p>
+            <p class="memo_text ellipsis" th:text="*{memo}"></p>
+            <p class="created_at" th:text="|作成日時： ${#temporals.format(memo.createdAt, 'yyyy/MM/dd　HH:mm:ss')}|"></p>
+            <button th:onclick="'location.href=\'' + @{/edit(id=*{id})} + '\''">edit</button>
+            <form th:action="@{/delete}" method="POST">
+              <input type="hidden" name="id" th:value="*{id}">
+              <input type="hidden" name="memo_type" th:value="*{memoType}">
+              <button type="submit" class="delete_button">delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="links">
+        <!-- 感情分析をチラ見せ。要素が空のときはget(0)でエラーになるため、要素が空でないときのみ表示。 -->
+        <div class="analytics_digest" th:if="${mfList.size != 0}">
+          <h2>分析結果</h2>
+          <div th:object="${mfList.get(0)}">
+            <p>最も使われた単語：</p>
+            <p class="indent">
+              <span class="highlight" th:text="*{getKey().substring(4)}"></span>
+              を
+              <span class="highlight" th:text="|*{getValue()}回使用|"></span>
+            </p>
+          </div>
+          <div class="emotion_part" th:object="${sentiScoreList}">
+            <div>
+              <p>感情スコア：</p>
+              <p th:text="*{get(0)}" th:class="|*{get(0) > 0 ? 'posi' : ''} *{get(0) < 0 ? 'nega' : ''} *{get(0) == 0 ? 'neut' : ''} highlight indent|"></p>
+            </div>
+            <div th:if="*{get(0) != 0}">
+              <p th:if="*{get(0) > 0}" th:text="この単語のおかげかも："></p>
+              <p th:if="*{get(0) < 0}" th:text="この単語が原因かも："></p>
+              <p th:text="*{get(1)}" th:class="|*{get(0) < 0 ? 'nega' : 'posi'}  highlight indent|"></p>
+            </div>
+          </div>
+          <div class="analytics_description">
+            <p class="click_here show">Q. 感情分析とは？</p>
+            <p class="hidden">A. 形態素解析（文を単語ごとにバラバラにする解析手法）と、評価極性辞書（単語ごとにpositive, negativeなどのステータスを与えた辞書）を用い、<br>単語ごとの点数を足し合わせて文章のポジ・ネガを定量化したものです。</p>
+            <a th:href="@{/analytics}">→さっそくメモを分析する</a>
+          </div>
+        </div>
+        
+        <!-- リンク -->
+        <div class="link">
+          <h2>リンク</h2>
+          <a th:href="@{/create}">メモを作成する</a>
+          <a th:href="@{/search}">メモを検索</a>
+        </div>
+    
+        <!-- アーカイブの表示 -->
+        <div class="archive">
+          <h2>月別アーカイブ</h2>
+          <div class="month_list" th:each="month : ${monthList}">
+            <a th:href="@{/archive(month=${month})}" th:text="|${month.substring(0, 4)}年${month.substring(5, 7)}月|"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+

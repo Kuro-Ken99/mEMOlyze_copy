@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE | $LAYOUT_TITLE">mEMOlyze</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/dialog.js}" defer="defer"></script>
+</head>
+
+<body>
+  <div layout:replace="~{layout/header::header}"></div>
+  <main>
+    <div layout:fragment="content" class="container"></div>
+  </main>
+  <div layout:replace="~{layout/footer::footer}"></div>
+</body>
+
+</html>

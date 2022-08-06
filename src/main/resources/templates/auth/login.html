@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>login</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="login">
+      <h2>ログイン</h2>
+      <form th:action="@{/login}" method="POST">
+        <input type="email" name="username" placeholder="メールアドレス" required>
+        <input type="password" name="password" minlength="8" placeholder="パスワード" required>
+        <button type="submit">login</button>
+      </form>
+      <div class="pass_reissue">
+        <p id="question" class="click_here show">パスワードを忘れた場合</p>
+        <div id="answer" class="hidden">
+          <p>ご登録のメールアドレスを下記に入力し、<br>sendを押してください。</p>
+          <form th:action="@{/pass_reissue}" method="POST">
+            <input type="email" name="mail" required>
+            <button type="submit">send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    <div class="after_register">
+      <p th:if="${isRegistered}" th:text="${isRegistered}"></p>
+      <p th:if="${mailUpdated}">メールアドレスの更新が完了しました。<br>上記より再度ログインしてください。</p>
+      <p class="error_message" th:if="${error}" th:text="${error}"></p>
+      <th:block th:if="${rawSecret}">
+        <p th:text="${rawSecret}"></p>
+        <p>ご登録のメールアドレスにパスワード再設定メールを送信しました。リンクをクリックし、上記パスワードを含めた情報を入力してください。</p>
+      </th:block>
+    </div>
+    
+    <div th:if="${registerError}" class="validation_error">
+      <p class="error_message">mail: 認証エラーが発生しました。<br>下記のいずれかをお試しください。
+      </p>
+      <p>・既に登録が完了していないか確認<br>　(ログインをお試しください)</p>
+      <p>・最新のメールのリンクであることを確認<br>　(送信したメールのうち、最新のもののみ有効となります)</p>
+      <p>・下記フォームより、登録用メールの再送
+      <form th:action="@{/resend}" method="POST">
+        <input type="email" name="mail" required>
+        <button type="submit">send</button>
+      </form>
+    </div>
+
+    <div th:if="${validateError}" class="validation_error">
+      <p class="error_message">mail: 認証エラーが発生しました。<br>下記のいずれかをお試しください。
+      </p>
+      <p>・既に更新が完了していないか確認<br>　(新しいメールアドレスでログインをお試しください)</p>
+      <p>・最新のメールのリンクであることを確認<br>　(送信したメールのうち、最新のもののみ有効となります)</p>
+      <p>・再度、アドレス変更メールを送信<br>　(ログインの上、mypageより再度お手続きください)</p>
+    </div>
+
+    <div th:if="${reissueError}" class="validation_error">
+      <p class="error_message">password: 認証エラーが発生しました。<br>下記のいずれかをお試しください。
+      </p>
+      <p>・認証パスワードに誤りがないか確認<br>　(再発行メール送信後、ブラウザの画面に表示されます)</p>
+      <p>・最新のメールのリンクであることを確認<br>　(送信したメールのうち、最新のもののみ有効となります)</p>
+      <p>・再発行メールの再送<br>　(「パスワードを忘れた場合」から再度お試しください)
+    </div>
+  </div>
+</body>
+</html>
+
+

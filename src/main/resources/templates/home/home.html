@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>home</title>
+</head>
+<body>
+  <div layout:fragment="content">
+
+    <!-- キャッチコピー -->
+    <div class="slogan">
+      <h1><span>mEMOlyze</span>で、<br>文の癖を発見しよう！</h1>
+      <div class="slogan_border">
+        <th:block th:each="logo, status : ${logoList}">
+          <p th:text="${logo}" th:class="|slogan_border_${status.count}|"></p>
+        </th:block>
+      </div>
+    </div>
+
+    <!-- アプリ説明 -->
+    <div class="description_block">
+      <h2><span>mEMOlyze</span>とは</h2>
+      <div>
+        <img th:src="@{/files/nigaoe_syoumu_tennou.png}" alt="聖武天皇の画像">
+        <div class="app_description">
+          <p>mEMOlyzeは、メモができるアプリです。<br>でも、メモなんてスマホのメモアプリで十分ですよね？<br>そこで、このアプリには3つの機能をつけました！<br>クリックすると説明が開けます(^o^)</p>
+          <div>
+            <p class="description_title click_here show">①検索機能</p>
+            <p class="hidden">…よくある文字検索だけでなく、<span>期間指定</span>もできるようにすることで、<br>「あの時書いたメモどこだっけ」を解決します！</p>
+            <p class="description_title click_here show">②形態素解析による分析</p>
+            <p class="hidden">…いきなり何のこと？！笑<br>説明しよう(誰)　形態素解析とは、文章を意味のある単語ごとに分割して、<br>品詞などを解析する分析手法、らしい！<br>このアプリでは、品詞ではなく<span>出現回数</span>に着目し、<br><span>普段自分がどんな単語をよく使うのか</span>が可視化できるようにしました。</p>
+            <p class="description_title click_here show">③感情分析</p>
+            <p class="hidden">…またもや何のこと？！<br>このアプリでは、東北大学の乾・鈴木研究室で作成された<span>日本語評価極性辞書</span><span class="reference click_here">(参考文献)</span>を使っています。<br>この辞書は、日本語の単語ごとにpositive, negaticeなどのステータスを加えたものを収録しており、②の形態素解析のときにバラバラにした単語一つずつに対して「評価極性辞書に内包されているか」「その場合、与えられている感情のステータスは何か」を解析し、ステータスに応じて<span>単語にスコアをつけて</span>います。<br>このスコアを合計し、特定の期間に書かれたメモが<span>positive・negativeのどちらに寄っているか</span>を分析できるのが、mEMOlyzeの最大の特徴です。</p>
+          </div>
+          <p>現状はWEBブラウザ上で使うWEBアプリのみのご用意のため、<br>スマホアプリのように思いついたときにサッとメモするといったことには向かないかもしれません。<br>例えば就活の自己分析や、日々の日記などに活用してみてくださいね(- -)/</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ログイン / ユーザー登録 -->
+    <div class="entry_buttons">
+      <button th:onclick="'location.href=\'' + @{/register} + '\''">ユーザー登録</button>
+      <button th:onclick="'location.href=\'' + @{/login} + '\''">login</button>
+    </div>
+    <div class="modal">
+      <div class="modal_content">
+        <p>東山昌彦, 乾健太郎, 松本裕治, 述語の選択選好性に着目した名詞評価極性の獲得, 言語処理学会第14回年次大会論文集, pp.584-587, 2008. / Masahiko Higashiyama, Kentaro Inui, Yuji Matsumoto. Learning Sentiment of Nouns from Selectional Preferences of Verbs and Adjectives, Proceedings of the 14th Annual Meeting of the Association for Natural Language Processing, pp.584-587, 2008.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+

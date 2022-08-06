@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <title>analytics</title>
+</head>
+<body>
+  <div layout:fragment="content">
+    <div class="bread_crumb">
+      <a th:href="@{/top}">top</a> > analytics
+    </div>
+
+    <!-- 検索ボックス -->
+    <div class="search">
+      <h2>期間を指定</h2>
+      <form th:action="@{/analytics}" method="POST">
+        <div class="date_search">
+          <div class="date">
+            <label>from
+              <input type="date" name="from_date" th:value="${from_date} ? ${from_date} : ''">
+            </label>
+          </div>
+          <div class="date">
+            <label>to
+              <input type="date" name="to_date" th:value="${to_date} ? ${to_date} : ''">
+            </label>
+          </div>
+        </div>
+        <button class="analytics_btn" type="submit">分析</button>
+      </form>
+      <p class="analytics_attention">※条件を入力しない場合、これまでの全メモを対象に分析を行います。</p>
+      <p class="analytics_attention">※下書きは分析対象に含まれません。</p>
+    </div>
+
+    <!-- 分析結果 -->
+    <div class="analytics">
+      <h2>分析結果</h2>
+      <div class="color_sample">
+        <p><span class="posi_color color_square">　</span> :  positive</p>
+        <p><span class="nega_color color_square">　</span> :  negative</p>
+        <p><span class="neut_color color_square">　</span> :  neutral</p>
+        <p><span class="null_color color_square">　</span> :  感情辞書に含まれない</p>
+      </div>
+      <div th:if="${mfList.size() > 0}" class="analytics_result">
+        <div class="frequent_word">
+          <!-- 1-5番目を表示 -->
+          <p class="frequent_title">▼頻出単語</p>
+          <div 
+            th:each="i, status : ${#numbers.sequence(0, 4)}" class="word_and_frequency">
+            <th:block th:if="${#lists.size(mfList) gt __${i}__}">
+              <p 
+                th:class="|ranking_${status.count} ${mfList[__${i}__].getKey().substring(0,4)} senti_key|" 
+                th:text="${mfList[__${i}__].getKey().substring(4)}">
+              </p>
+              <p class="senti_value">
+                <span 
+                  th:class="|ranking_${status.count} ${mfList[__${i}__].getKey().substring(0,4)}|" 
+                  th:text="${mfList[__${i}__].getValue()}">
+                </span> 回
+              </p>
+            </th:block>
+          </div>
+          <p class="open click_here">▼もっと表示する</p>
+          <p class="close hidden click_here">▲閉じる</p>
+          <!-- 6番目以降を表示 -->
+          <div id="sixth_or_later" class="hidden">
+            <div 
+              th:if="${mfList.size() > 5}"
+              th:each="i : ${#numbers.sequence(5, __${mfList.size() - 1}__)}" 
+              class="word_and_frequency">
+              <th:block th:if="${#lists.size(mfList) gt __${i}__}">
+                <p
+                  th:class="|${mfList[__${i}__].getKey().substring(0,4)} senti_key|" 
+                  th:text="${mfList[__${i}__].getKey().substring(4)}">
+                </p>
+                <p class="senti_value">
+                  <span 
+                    th:class="|${mfList[__${i}__].getKey().substring(0,4)}|" 
+                    th:text="${mfList[__${i}__].getValue()}">
+                  </span> 回
+                </p>
+              </div>
+            </th:block>
+          </div>
+        </div>
+        
+        <div class="senti_analytics" th:object="${sentiScoreList}">
+          <p class="senti_title">▼感情スコア</p>
+          <p>
+            <span 
+              th:class="|*{get(0) > 0 ? 'posi' : ''} *{get(0) < 0 ? 'nega' : ''} *{get(0) == 0 ? 'neut' : ''} senti_score|"
+              th:text="*{get(0)}"></span> 点
+          </p>
+          <th:block th:if="*{get(0) > 0}">
+            <p class="senti_title">▼一番使われた前向きな言葉</p>
+            <p><span class="senti_score posi" th:text="|*{get(1)}  *{get(2)}|"></span>点</p>
+          </th:block>
+          <th:block th:if="*{get(0) < 0}">
+            <p class="senti_title">▼一番使われた後ろ向きな言葉</p>
+            <p><span class="senti_score nega" th:text="|*{get(1)}  *{get(2)}|"></span> 点</p>
+          </th:block>
+          <p class="senti_title">▼mEMOlyzeからの一言</p>
+          <p th:if="${message}" th:text="${message}"></p>
+        </div>
+      </div>
+      <div th:unless="${mfList.size() > 0}" class="error_message">
+        <p class="error_title">分析結果がありませんでした。</p>
+        <p>▼考えられる原因</p>
+        <p>・指定した期間内にメモが存在しない</p>
+        <p>・指定した期間内のメモが、意味をもたない文字<br>　または日本語以外の言語で構成されている</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

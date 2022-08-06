@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<body>
+  <header layout:fragment="header">
+    <div class="container">
+      <a class="logo" th:href="@{/top}">mEMOlyze</a>
+      <div class="header_list">
+        <nav>
+          <ul th:switch="${#httpServletRequest.servletPath}">
+            <li th:case="'/login'"><a class="site_nav" th:href="@{/register}">ユーザー登録</a></li>
+            <li th:case="'/register'"><a class="site_nav" th:href="@{/login}">ログイン</a></li>
+            <th:block th:case="'/'">
+              <li>
+                <a class="site_nav" th:href="@{/login}">ユーザー登録</a>
+              </li>
+              <li>
+                <a class="site_nav" th:href="@{/login}">ログイン</a>
+              </li>
+            </th:block>
+            <th:block th:if="${loginUser}">
+              <li>
+                <a class="site_nav contact_and_faq" th:href="@{/contact}">お問合せ</a>
+              </li>
+              <li>
+                <form th:action="@{/logout}" name="logout" method="POST">
+                  <a class="site_nav" href="javascript:logout.submit()">ログアウト</a>
+                </form>
+              </li>
+            </th:block>
+          </ul>
+        </nav>
+        <div th:if="${loginUser}" class="user_icon">
+          <a 
+            th:text="*{loginUser.name.substring(0, 1)}"
+            th:href="@{/mypage}">
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+</body>
+</html>
