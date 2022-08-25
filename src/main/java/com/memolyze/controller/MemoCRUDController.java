@@ -122,4 +122,6 @@ public class MemoCRUDController {
 
     return "redirect:/contact";
   }
+
+  
 }

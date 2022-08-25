@@ -13,8 +13,8 @@
     <div class="create_form">
       <h2>メモを作成する</h2>
       <form th:action="@{/create}" method="POST">
-        <input type="text" name="title" id="title" placeholder="タイトルを入力してください">
-        <textarea name="memo" id="memo" placeholder="本文を入力してください" required></textarea>
+        <input type="text" name="title" id="title" th:value="${memo} ? ${memo.title} : ''" placeholder="タイトルを入力してください">
+        <textarea name="memo" id="memo" th:text="${memo} ? ${memo.memo} : ''" placeholder="本文を入力してください" required></textarea>
         <p th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></p>
         <div class="edit_btns">
           <button type="submit" name="memo_type" value="memo">保存</button>
@@ -22,11 +22,9 @@
           <button id="reset" class="delete_button" type="reset">クリア</button>
         </div>
         <script>
-          memo.value = localStorage.getItem('memo');
           memo.oninput = () => {
-            localStorage.setItem('memo', memo.value)
+          localStorage.setItem('memo', memo.value)
           };
-          title.value = localStorage.getItem('title');
           title.oninput = () => {
             localStorage.setItem('title', title.value)
           };

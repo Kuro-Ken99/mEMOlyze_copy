@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.memolyze.entity.Memo;
 import com.memolyze.entity.User;
@@ -74,6 +75,16 @@ public class IndexController {
     model.addAttribute("loginUser", loginUser);
 
     return "crud/edit";
+  }
+
+  @GetMapping("/copy")
+  public String copy(RedirectAttributes redirectAttributes, @AuthenticationPrincipal User loginUser, @RequestParam("id") int memoId) {
+    Memo memo = memoCRUDService.findMemo(memoId);
+
+    redirectAttributes.addFlashAttribute("memo", memo);
+    redirectAttributes.addFlashAttribute("loginUser", loginUser);
+
+    return "redirect:/create";
   }
 
   @GetMapping("/drop")
@@ -139,4 +150,5 @@ public class IndexController {
 
     return "mypage/mypage";
   }
+  
 }

@@ -5,10 +5,36 @@
 </head>
 <body>
   <div layout:fragment="content">
+    <div class="create_form">
+      <h1>メモ作成</h1>
+      <form th:action="@{/create}" method="POST">
+        <input type="text" name="title" id="title" placeholder="タイトルを入力してください">
+        <textarea name="memo" id="memo" placeholder="本文を入力してください" required></textarea>
+        <p th:if="${errorMessage}" th:text="${errorMessage}" class="error_message"></p>
+        <div class="edit_btns">
+          <button type="submit" name="memo_type" value="memo">保存</button>
+          <button type="submit" name="memo_type" value="draft">下書き保存</button>
+          <button id="reset" class="delete_button" type="reset">クリア</button>
+        </div>
+        <script>
+          memo.value = localStorage.getItem('memo');
+          memo.oninput = () => {
+            localStorage.setItem('memo', memo.value)
+          };
+          title.value = localStorage.getItem('title');
+          title.oninput = () => {
+            localStorage.setItem('title', title.value)
+          };
+          $('#reset').click(function () {
+            localStorage.clear();
+          });
+        </script>
+      </form>
+    </div>
     <div class="memos_and_links">
       <!-- メモの一覧表示 -->
       <div class="memos">
-        <h1>メモ一覧</h1>
+        <h2>メモ一覧</h2>
         <div class="memo" th:each="memo : ${memosList}" th:object="${memo}">
           <div class="text_box">
             <p th:text="*{title}" class="title"></p>
@@ -20,6 +46,7 @@
               <input type="hidden" name="memo_type" th:value="*{memoType}">
               <button type="submit" class="delete_button">delete</button>
             </form>
+            <button th:onclick="'location.href=\'' + @{/copy(id=*{id})} + '\''">copy</button>
           </div>
         </div>
       </div>
@@ -48,24 +75,24 @@
             </div>
           </div>
           <div class="analytics_description">
-            <p class="click_here show">Q. 感情分析とは？</p>
+            <p class="click_here show underline">Q. 感情分析とは？</p>
             <p class="hidden">A. 形態素解析（文を単語ごとにバラバラにする解析手法）と、評価極性辞書（単語ごとにpositive, negativeなどのステータスを与えた辞書）を用い、<br>単語ごとの点数を足し合わせて文章のポジ・ネガを定量化したものです。</p>
-            <a th:href="@{/analytics}">→さっそくメモを分析する</a>
+            <a th:href="@{/analytics}" class="underline">→さっそくメモを分析する</a>
           </div>
         </div>
         
         <!-- リンク -->
         <div class="link">
           <h2>リンク</h2>
-          <a th:href="@{/create}">メモを作成する</a>
-          <a th:href="@{/search}">メモを検索</a>
+          <a th:href="@{/create}" class="underline">下書き一覧</a>
+          <a th:href="@{/search}" class="underline">メモを検索</a>
         </div>
     
         <!-- アーカイブの表示 -->
         <div class="archive">
           <h2>月別アーカイブ</h2>
           <div class="month_list" th:each="month : ${monthList}">
-            <a th:href="@{/archive(month=${month})}" th:text="|${month.substring(0, 4)}年${month.substring(5, 7)}月|"></a>
+            <a th:href="@{/archive(month=${month})}" th:text="|${month.substring(0, 4)}年${month.substring(5, 7)}月|" class="underline"></a>
           </div>
         </div>
       </div>
